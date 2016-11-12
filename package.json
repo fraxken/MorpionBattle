@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node app/index --harmony",
     "build": "typings install && ntsc",
-    "database": "node scripts/database --harmony"
+    "database": "node scripts/database --harmony",
+    "password": "node scripts/password --harmony"
   },
   "dependencies": {
     "async": "^2.1.2",
