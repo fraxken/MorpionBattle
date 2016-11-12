@@ -18,8 +18,14 @@ export function getModules(focusDirectory: string) {
                         trackPath(filePath,false).then( () => callback() ).catch( errMessage => reject_sub(errMessage) );
                     }
                     else {
-                        routingArr.push(filePath);
-                        callback();
+                        const file_ext : string = path.extname(filePath);
+                        if(file_ext === '.js') {
+                            routingArr.push(filePath);
+                            callback();
+                        }
+                        else {
+                            callback();
+                        }
                     }
                 }, err => {
                     if(err) reject_sub(err);
