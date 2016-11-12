@@ -1,0 +1,124 @@
+.ng-leave,
+.ng-enter,
+.ng-hide,
+.ng-hide-add,
+.ng-hide-remove {
+    -webkit-animation-timing-function: ease;
+    -moz-animation-timing-function: ease;
+    -ms-animation-timing-function: ease;
+    -o-animation-timing-function: ease;
+    animation-timing-function: ease;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    -ms-animation-fill-mode: both;
+    -o-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden
+}
+
+.view.ng-enter,
+.view.ng-leave {
+    -webkit-animation-duration: .2s;
+    -moz-animation-duration: .2s;
+    -ms-animation-duration: .2s;
+    -o-animation-duration: .2s;
+    animation-duration: .2s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    will-change: opacity;
+}
+
+.popupAnimation {
+    -webkit-animation-name: fadeIn;
+    -moz-animation-name: fadeIn;
+    -ms-animation-name: fadeIn;
+    -o-animation-name: fadeIn;
+    animation-name: fadeIn;
+    -webkit-animation-duration: 0.4s;
+    -moz-animation-duration: 0.4s;
+    -ms-animation-duration: 0.4s;
+    -o-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+}
+.popupAnimation.ng-hide-add {
+    -webkit-animation-name: fadeOut;
+    -moz-animation-name: fadeOut;
+    -ms-animation-name: fadeOut;
+    -o-animation-name: fadeOut;
+    animation-name: fadeOut;
+    -webkit-animation-duration: 0.4s;
+    -moz-animation-duration: 0.4s;
+    -ms-animation-duration: 0.4s;
+    -o-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+}
+.popupAnimation.ng-hide {
+    display: none;
+}
+
+.view.ng-leave {
+    -webkit-animation-name: fadeOut;
+    -moz-animation-name: fadeOut;
+    -ms-animation-name: fadeOut;
+    -o-animation-name: fadeOut;
+    animation-name: fadeOut;
+    -webkit-animation-duration: 0.4s;
+    -moz-animation-duration: 0.4s;
+    -ms-animation-duration: 0.4s;
+    -o-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+}
+.view.ng-enter {
+    -webkit-animation-name: fadeIn;
+    -moz-animation-name: fadeIn;
+    -ms-animation-name: fadeIn;
+    -o-animation-name: fadeIn;
+    animation-name: fadeIn;
+    -webkit-animation-duration: 0.4s;
+    -moz-animation-duration: 0.4s;
+    -ms-animation-duration: 0.4s;
+    -o-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+}
+
+.animationInclude {
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+.animationInclude.ng-enter, .animationInclude.ng-leave {
+    opacity: 0;
+    will-change: opacity;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.animationInclude.ng-enter {
+    z-index: 100;
+}
+.animationInclude.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.animationInclude.ng-leave {
+    z-index: 200;
+}
+.animationInclude.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.ngAnimationFade {
+    transition: 0.5s linear all;
+    opacity: 1;
+}
+.ngAnimationFade.ng-hide {
+    opacity: 0;
+}

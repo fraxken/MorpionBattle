@@ -1,0 +1,156 @@
+form {
+    font-family: "Roboto";
+}
+
+input {
+    outline: none;
+}
+
+form .field {
+    position: relative;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s linear;
+}
+
+form .field::before, form .field::after {
+    content: ' ';
+    height: 2px;
+    background: #E0E0E0;
+    position: absolute;
+    left: 0;
+    bottom: 26px;
+    width: 100%;
+    transition: all 0.3s linear;
+}
+
+form .field::after {
+    background-color: #039BE5;
+    transform: scaleX(0);
+    transform-origin: 0 100%;
+}
+
+    form input[type="submit"] {
+        border: none;
+        height: 30px;
+        padding: 0 20px;
+        margin-left: auto;
+        margin-top: 20px;
+        border-radius: 2px;
+        box-shadow: 1px 1px 2px #EEE;
+        text-shadow: 1px 1px 6px rgba(20,20,20,0.4);
+    }
+        form input[type="submit"]:not(.disabled) {
+            background: #039BE5;
+            color: #FFF;
+            cursor: pointer;
+            transition: all 0.2s linear;
+        }
+            form input[type="submit"]:not(.disabled):hover {
+                background: #8BC34A;
+            }
+        form input[type="submit"].disabled {
+            background: #666;
+            color: #E1E1E1;
+        }
+
+    /* Has label style */
+    form .field.has-label > label {
+        transform: translateY(0);
+        font-size: 12px;
+    }
+
+    /* Focus Style */
+    form .field.is-focused::after {
+        transform: scaleX(1);
+    }
+
+    form .field.is-focused > label {
+        font-size: 12px;
+        color: #039BE5;
+    }
+
+    form .field.is-focused > input {
+        color: #039BE5;
+    }
+
+    form .field:not(.is-focused) > input {
+        color: #616161;
+    }
+
+    form .field > label {
+        position: relative;
+        line-height: 16px;
+        color: #9E9E9E;
+        font-weight: 400;
+        transition: all 0.2s linear;
+        transform: translateY(28px);
+        transform-origin: 0 50%;
+        font-size: 16px;
+    }
+
+    form .field > select {
+        position: relative;
+        line-height: 16px;
+        padding: 8px 0;
+        -webkit-appearence: none;
+        height: 40px;
+        box-sizing: border-box;
+        font-size: 16px;
+        font-family: "Roboto";
+        transition: all 0.2s linear;
+        background: #E1E1E1;
+        border-radius: 1px;
+        outline: none;
+        border: none;
+        padding: 0 10px;
+        border: 2px solid #FFF;
+    }
+
+    form .field > input {
+        position: relative;
+        line-height: 16px;
+        padding: 8px 0;
+        background: transparent;
+        border: none;
+        -webkit-appearance: none;
+        font-family: "Roboto";
+        font-size: 16px;
+        height: 22px;
+        transition: all 0.2s linear;
+    }
+        form .field > input.ng-valid {
+            color: #8BC34A;
+        }
+
+    form .field > .input_info {
+        height: 20px;
+        padding-top: 5px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        font-size: 0.85em;
+        font-weight: 400;
+        font-family: "Roboto";
+    }
+        form .field > .input_info span.error {
+            transition: all 0.2s linear;
+            color: #E0E0E0;
+            font-weight: 300;
+        }
+
+        form .field > .input_info span.invalid {
+            color: #FF5252;
+        }
+        form .field > .input_info span.info {
+            color: #E0E0E0;
+        }
+        form .field > .input_info span.valid {
+            color: #8BC34A;
+        }
+
+        form .field > .input_info > .count {
+            margin-left: auto;
+            color: #E0E0E0;
+        }

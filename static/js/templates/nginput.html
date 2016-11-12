@@ -1,0 +1,24 @@
+<div class='field' ng-class="{'is-focused': focus,'has-label': has_label}">
+    <label for="{{name}}">{{placeholder}}</label>
+    <input
+        type="{{type}}"
+        name="{{name}}"
+        id="input_{{name}}"
+        autocomplete="off"
+        spellcheck="false"
+        autocorrect="off"
+        autocapitalize="off"
+        ng-model='value'
+        ng-change='onChange()'
+        ng-minlength="{{min}}"
+        ng-maxlength="{{max}}"
+        ng-focus='focusIn()'
+        ng-blur='focusOut()'
+        ng-model-options="{ allowInvalid: true }"
+        required
+    >
+    <div class="input_info">
+        <ng-transclude></ng-transclude>
+        <span class="count" ng-class="{'invalid': form.{{name}}.$error.maxlength}">{{count}} / {{max}}</span>
+    </div>
+</div>
