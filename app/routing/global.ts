@@ -13,6 +13,12 @@ router.get('/main/authentification', middleware.notConnected, function *(next) {
     this.render("auth");
 });
 
+router.get('/test', function* (next) {
+    this.body = {
+        "test" : "hello world"
+    };
+});
+
 router.get('/', function *(next) {
     this.render("layout");
 });

@@ -17,9 +17,11 @@ const sessions          = require('koa-generic-session');
 const koaPug            = require('koa-pug');
 const bodyParser        = require('koa-bodyparser');
 const koaJson           = require('koa-json');
+const koaRouter         = require('koa-router');
 
 const configuration: iConfiguration = require('../configuration.json');
-const numCPUs : number = os.cpus().length;
+//const numCPUs : number = os.cpus().length;
+const numCPUs : number = 1;
 
 // Debugging & Trace
 process.on('unhandledRejection', console.log.bind(console));
@@ -45,7 +47,7 @@ else {
     const app = koa();
 
     new koaPug({
-        viewPath: path.join(__dirname,'../','views'),
+        viewPath: path.join(__dirname,'../views'),
         noCache: process.env.NODE_ENV === 'development',
         pretty: true,
         debug: process.env.NODE_ENV === 'development',
@@ -59,27 +61,32 @@ else {
 
     app.use(session);
     app.use( bodyParser() );
-    app.use( helmet() );
+    //app.use( helmet() );
     app.use( koaJson() );
 
     app.use( function *(next) {
-        database.connect(configuration.database, (err: Error, conn: database.Connection) => {
+        /*database.connect(configuration.database, (err: Error, conn: database.Connection) => {
             if(err) throw new Error(err.toString());
             this.database = database;
             this.conn = conn;
-        });
+        }); */
+        yield next;
     });
 
     // Load routing!
     loader.getModules("routing").then( (modulesArr: string[]) => {
 
         modulesArr.forEach( (route: string) => {
+            console.log(`Load route ${route}`);
             const Router = require(route);
             app.use( Router.routes() ).use( Router.allowedMethods() );
         });
-        app.server.listen( process.argv[3] || configuration.app.port , configuration.app.ip );
+
+        app.listen( configuration.app.port );
 
     }).catch( errMessage => console.log(errMessage) );
+
+    const Router = new koaRouter();
 
 
     const closeHandler : () => void = () => {
