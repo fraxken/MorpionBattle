@@ -22,3 +22,10 @@ interface iConfiguration {
         hashSize: number;
     }
 }
+
+interface IOptionHash {
+    algorithm ?: string;
+    iteration ?: number;
+    hashSize ?: number;
+    salt ?: string;
+}
