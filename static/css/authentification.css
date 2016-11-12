@@ -1,0 +1,45 @@
+#ngView > h1 {
+    font-size: 30px;
+    color: #06F;
+}
+
+#ngView > span {
+    font-size: 18px;
+}
+
+#authentification {
+    width: 50%;
+    min-height: 400px;
+    display: flex;
+    margin-top: 30px;
+}
+
+    #authentification h2 {
+        border-bottom: 3px solid #EEE;
+        height: 30px;
+        font-family: Roboto;
+        display: flex;
+        align-items: center;
+        color: #333;
+        font-size: 17px;
+    }
+
+    #authentification > section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #authentification > .register {
+        margin-right: 30px;
+        flex-grow: 1;
+    }
+
+    #authentification > .separation {
+        width: 3px;
+        background: #CCC;
+    }
+
+    #authentification > .login {
+        margin-left: 30px;
+        flex-grow: 1;
+    }

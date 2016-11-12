@@ -48,9 +48,9 @@ else {
 
     new koaPug({
         viewPath: path.join(__dirname,'../views'),
-        noCache: process.env.NODE_ENV === 'development',
+        noCache: true,
         pretty: true,
-        debug: process.env.NODE_ENV === 'development',
+        debug: true,
         compileDebug: false,
         app: app
     });

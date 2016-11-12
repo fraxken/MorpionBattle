@@ -1,1 +1,59 @@
-h1 Authentification page!
+h1 Morpion Battle
+span Multiplayers Morpion games
+section(id="authentification",ng-controller="Auth_root")
+    section(class="register")
+        h2 Login
+        form(name="signin",ng-controller="Auth_login",ng-submit="submit()",novalidate)
+            nginput(
+                ng-model="formData.login",
+                name="login",
+                placeholder="Login",
+                min="6",
+                max="50",
+                type="text",
+                form="form"
+            )
+            nginput(
+                ng-model="formData.password",
+                name="password",
+                placeholder="Password",
+                min="8",
+                max="30",
+                type="password",
+                form="form"
+            )
+            // Submit input
+            input(type="submit",ng-class="{'disabled' : signin.$invalid}",ng-disabled="signin.$invalid",value="Login")
+    section(class="separation")
+    section(class="login")
+        h2 Register account
+        form(name="register",ng-controller="Auth_register",ng-submit="submit()",novalidate)
+            nginput(
+                ng-model="formData.login",
+                name="login",
+                placeholder="Login",
+                min="6",
+                max="50",
+                type="text",
+                form="form"
+            )
+            nginput(
+                ng-model="formData.password",
+                name="password",
+                placeholder="Password",
+                min="8",
+                max="30",
+                type="password",
+                form="form"
+            )
+            nginput(
+                ng-model="formData.passwordRepeat",
+                name="password_repeat",
+                placeholder="Password repeat",
+                min="8",
+                max="30",
+                type="password",
+                form="form"
+            )
+            // Submit input
+            input(type="submit",ng-class="{'disabled' : register.$invalid}",ng-disabled="register.$invalid",value="Sign in")
