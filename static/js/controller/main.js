@@ -49,9 +49,12 @@
 
     });
 
-    APP.controller("lobby",function($scope,$location,app) {
-        //if($location.path() != "/main") $location.path("/main",false);
+    APP.controller("lobby",function($scope,$location) {
+        if($location.path() != "/lobby") $location.path("/lobby",false);
 
+        $scope.logout = function() {
+            $location.path('logout');
+        }
 
     });
 

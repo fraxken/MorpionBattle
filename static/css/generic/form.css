@@ -6,6 +6,11 @@ input {
     outline: none;
 }
 
+button {
+    border: 2px solid #EEE;
+    outline: none;
+}
+
 form .field {
     position: relative;
     padding: 8px 0;

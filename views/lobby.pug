@@ -1,1 +1,27 @@
-h1 Lobby
+section(id="lobby",ng-controller="lobby")
+    section(class="userData")
+        section(class="name")
+            p Fraxken
+            span(ng-click="logout()") Logout
+        section(class="stats win")
+            h2 win
+            span 93
+        section(class="stats loose")
+            h2 loose
+            span 3
+        section(class="stats elo")
+            h2 elo
+            span 4555
+    main
+        section(class="serversList")
+            section(class="server")
+                p(class="lock"): i(class="fa fa-lock")
+                p(class="name") Name
+                span 1/3
+            section(class="server")
+                p(class="lock"): i(class="fa fa-unlock")
+                p Name
+                span 1/3
+        section(class="options")
+            button Create Game
+            button Join

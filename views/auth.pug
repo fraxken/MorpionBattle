@@ -24,7 +24,6 @@ section(id="authentification",ng-controller="Auth_root")
             )
             // Submit input
             input(type="submit",ng-class="{'disabled' : signin.$invalid}",ng-disabled="signin.$invalid",value="Login")
-    section(class="separation")
     section(class="login")
         h2 Register account
         form(name="register",ng-controller="Auth_register",ng-submit="submit()",novalidate)
