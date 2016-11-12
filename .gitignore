@@ -1,4 +1,4 @@
 /node_modules
 /typings
-*.js
-!static/**/**/**/*.js
+/app/**/**/**/*.js
+/scripts/*.js

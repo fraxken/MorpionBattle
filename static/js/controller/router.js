@@ -20,6 +20,9 @@
         .when('/', {
             templateUrl: 'main/authentification'
         })
+        .when('/lobby', {
+            templateUrl: 'main/lobby'
+        })
         .when('/logout', {
             templateUrl: 'authentification/logout',
         })

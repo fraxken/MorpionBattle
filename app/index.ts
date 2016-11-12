@@ -65,11 +65,11 @@ else {
     app.use( koaJson() );
 
     app.use( function *(next) {
-        /*database.connect(configuration.database, (err: Error, conn: database.Connection) => {
+        yield database.connect(configuration.database, (err: Error, conn: database.Connection) => {
             if(err) throw new Error(err.toString());
-            this.database = database;
+            this.db = database;
             this.conn = conn;
-        }); */
+        });
         yield next;
     });
 
