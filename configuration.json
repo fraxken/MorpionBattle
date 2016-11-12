@@ -1,0 +1,19 @@
+{
+    "app": {
+        "port": 3000,
+        "ip": "0.0.0.0",
+        "host": "localhost",
+        "secretkey": "Biwdi129fguiobwdjondww146916d8wwddwu8fnjow"
+    },
+    "database": {
+        "host": "localhost",
+        "port": 28015,
+        "db": "morpionbattle"
+    },
+    "password": {
+        "algorithm": "sha256",
+        "iteration": 15000,
+        "saltSize": 512,
+        "hashSize": 512
+    }
+}
