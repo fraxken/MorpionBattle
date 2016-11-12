@@ -63,7 +63,7 @@
 
     });
 
-    APP.controller("lobby",function($scope,$location) {
+    APP.controller("lobby",function($scope,$location,socket) {
         if($location.path() != "/lobby") $location.path("/lobby",false);
 
         $scope.logout = function() {

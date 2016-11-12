@@ -23,6 +23,9 @@
         .when('/lobby', {
             templateUrl: 'main/lobby'
         })
+        .when('/game', {
+            templateUrl: 'main/game'
+        })
         .when('/logout', {
             templateUrl: 'authentification/logout',
         })
