@@ -8,6 +8,15 @@ import * as events from "events";
 import * as chalk from "chalk";
 import * as sync from "async";
 import * as database from "rethinkdb";
+import * as path from "path";
+import * as loader from "./core/autoloader";
+
+const koa               = require('koa');
+const helmet            = require('koa-helmet');
+const sessions          = require('koa-generic-session');
+const koaPug            = require('koa-pug');
+const bodyParser        = require('koa-bodyparser');
+const koaJson           = require('koa-json');
 
 const configuration: iConfiguration = require('../configuration.json');
 const numCPUs : number = os.cpus().length;
@@ -33,10 +42,45 @@ if (cluster.isMaster) {
 }
 else {
 
-    /*database.connect(configuration.database, (err: Error, conn: database.Connection) => {
-        if(err) throw new Error(err.toString());
+    const app = koa();
 
-    });*/
+    new koaPug({
+        viewPath: path.join(__dirname,'../','views'),
+        noCache: process.env.NODE_ENV === 'development',
+        pretty: true,
+        debug: process.env.NODE_ENV === 'development',
+        compileDebug: false,
+        app: app
+    });
+
+    // Session middleware implementation !
+    app.keys = ['keys', 'keykeys'];
+    const session = sessions();
+
+    app.use(session);
+    app.use( bodyParser() );
+    app.use( helmet() );
+    app.use( koaJson() );
+
+    app.use( function *(next) {
+        database.connect(configuration.database, (err: Error, conn: database.Connection) => {
+            if(err) throw new Error(err.toString());
+            this.database = database;
+            this.conn = conn;
+        });
+    });
+
+    // Load routing!
+    loader.getModules("routing").then( (modulesArr: string[]) => {
+
+        modulesArr.forEach( (route: string) => {
+            const Router = require(route);
+            app.use( Router.routes() ).use( Router.allowedMethods() );
+        });
+        app.server.listen( process.argv[3] || configuration.app.port , configuration.app.ip );
+
+    }).catch( errMessage => console.log(errMessage) );
+
 
     const closeHandler : () => void = () => {
         process.exit();
