@@ -1,8 +1,56 @@
 section(id="game")
     header
+        h1 Waiting for players
     main
         aside
+            section.round
+                p Round 2 / 7
+            section.player.turn
+                section.score
+                    p 0
+                section.name
+                    p Fraxken
+                section.play
+                    i(class="fa fa-gamepad")
             section.player
-            section.player
-            section.player
+                section.score
+                    p 0
+                section.name
+                    p Xstoudi
+                section.play
+                    i(class="fa fa-gamepad")
+            section.player.inactive
+                p Available
+            section.options
+                button Leave
         section(class="morpion")
+            section.line
+                section.case.green: .round
+                section.case: .round
+                section.case.purple: .round
+                section.case.purple: .round
+                section.case: .round
+            section.line
+                section.case: .round
+                section.case.green: .round
+                section.case.red: .round
+                section.case: .round
+                section.case: .round
+            section.line
+                section.case: .round
+                section.case.green: .round
+                section.case: .round
+                section.case: .round
+                section.case: .round
+            section.line
+                section.case: .round
+                section.case: .round
+                section.case.red: .round
+                section.case: .round
+                section.case: .round
+            section.line
+                section.case: .round
+                section.case: .round
+                section.case.red: .round
+                section.case: .round
+                section.case: .round
