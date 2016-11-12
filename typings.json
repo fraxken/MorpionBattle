@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "async": "registry:npm/async#2.0.1+20160815105832",
     "chalk": "registry:npm/chalk#1.1.1+20160812215109"
   },
   "globalDependencies": {
-    "node": "registry:dt/node#6.0.0+20161110151007"
+    "node": "registry:env/node#6.0.0+20160813135048",
+    "rethinkdb": "registry:dt/rethinkdb#1.10.0+20160811111312"
   }
 }
