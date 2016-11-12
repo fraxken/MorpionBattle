@@ -44,56 +44,56 @@ if (cluster.isMaster) {
 }
 else {
 
-    const app = koa();
+    database.connect(configuration.database, (err: Error, conn: database.Connection) => {
+        if(err) throw new Error(err.toString());
 
-    new koaPug({
-        viewPath: path.join(__dirname,'../views'),
-        noCache: true,
-        pretty: true,
-        debug: true,
-        compileDebug: false,
-        app: app
-    });
+        const app = koa();
 
-    // Session middleware implementation !
-    app.keys = ['keys', 'keykeys'];
-    const session = sessions();
+        new koaPug({
+            viewPath: path.join(__dirname,'../views'),
+            noCache: true,
+            pretty: true,
+            debug: true,
+            compileDebug: false,
+            app: app
+        });
 
-    app.use(session);
-    app.use( bodyParser() );
-    //app.use( helmet() );
-    app.use( koaJson() );
+        // Session middleware implementation !
+        app.keys = ['keys', 'keykeys'];
+        const session = sessions();
 
-    app.use( function *(next) {
-        yield database.connect(configuration.database, (err: Error, conn: database.Connection) => {
-            if(err) throw new Error(err.toString());
+        app.use(session);
+        app.use( bodyParser() );
+        //app.use( helmet() );
+        app.use( koaJson() );
+
+        app.use( function *(next) {
             this.db = database;
             this.conn = conn;
+            yield next;
         });
-        yield next;
+
+        // Load routing!
+        loader.getModules("routing").then( (modulesArr: string[]) => {
+
+            modulesArr.forEach( (route: string) => {
+                const Router = require(route);
+                app.use( Router.routes() ).use( Router.allowedMethods() );
+            });
+
+            app.listen( configuration.app.port );
+
+        }).catch( errMessage => console.log(errMessage) );
+
+        const Router = new koaRouter();
+
+
+        const closeHandler : () => void = () => {
+            process.exit();
+        }
+        process.on('exit',closeHandler);
+        process.on('SIGINT',closeHandler);
+        process.on('uncaughtException',closeHandler);
     });
-
-    // Load routing!
-    loader.getModules("routing").then( (modulesArr: string[]) => {
-
-        modulesArr.forEach( (route: string) => {
-            console.log(`Load route ${route}`);
-            const Router = require(route);
-            app.use( Router.routes() ).use( Router.allowedMethods() );
-        });
-
-        app.listen( configuration.app.port );
-
-    }).catch( errMessage => console.log(errMessage) );
-
-    const Router = new koaRouter();
-
-
-    const closeHandler : () => void = () => {
-        process.exit();
-    }
-    process.on('exit',closeHandler);
-    process.on('SIGINT',closeHandler);
-    process.on('uncaughtException',closeHandler);
 
 }

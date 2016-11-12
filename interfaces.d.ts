@@ -1,6 +1,10 @@
 interface user {
-    login: string;
-    password: string;
+    id?: string;
+    login?: string;
+    password?: string;
+    win?: number;
+    loose?: number;
+    elo?: number;
 }
 
 interface iConfiguration {

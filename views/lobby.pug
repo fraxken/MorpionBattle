@@ -1,17 +1,17 @@
 section(id="lobby",ng-controller="lobby")
     section(class="userData")
         section(class="name")
-            p Fraxken
+            p #{login}
             span(ng-click="logout()") Logout
         section(class="stats win")
             h2 win
-            span 93
+            span #{win}
         section(class="stats loose")
             h2 loose
-            span 3
+            span #{loose}
         section(class="stats elo")
             h2 elo
-            span 4555
+            span #{elo}
     main
         section(class="serversList")
             section(class="server")

@@ -67,7 +67,7 @@
         if($location.path() != "/lobby") $location.path("/lobby",false);
 
         $scope.logout = function() {
-            $location.path('logout');
+            $location.path('logout',true);
         }
 
     });
