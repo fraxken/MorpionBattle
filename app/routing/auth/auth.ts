@@ -9,11 +9,11 @@ const router = module.exports = require('koa-router')({
 });
 
 router.post('/login', function *(next) {
-
+    console.log(this.request.body);
 });
 
 router.post('/register', function *(next) {
-
+    console.log(this.request.body);
 });
 
 router.get('/logout', middleware.connected, function *(next) {

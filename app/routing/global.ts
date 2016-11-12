@@ -5,7 +5,7 @@ import * as path from "path";
 const middleware = require(path.join(__dirname,"../","core/middleware.js"));
 const router = module.exports = require('koa-router')();
 
-router.get('/main/lobby', middleware.notConnected, function *(next) {
+router.get('/main/lobby', function *(next) {
     this.render("lobby");
 });
 

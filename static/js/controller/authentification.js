@@ -20,8 +20,6 @@
                 if (data.errCode == 1) {
                     $location.path("lobby");
                 }
-            }).error(function (data, status, headers, config) {
-                console.log(data);
             });
         }
     });
@@ -35,8 +33,6 @@
                 if (data.errCode == 1) {
                     $location.path("lobby");
                 }
-            }).error(function (data, status, headers, config) {
-                console.log(data);
             });
         }
     });
