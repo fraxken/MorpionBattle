@@ -23,5 +23,5 @@ section(id="lobby",ng-controller="lobby")
                 p Name
                 span 1/3
         section(class="options")
-            button Create Game
-            button Join
+            button(ng-click="popupState(true)") Create Game
+            button.inactive Join

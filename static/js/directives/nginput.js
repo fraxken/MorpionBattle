@@ -1,13 +1,6 @@
 (function() {
     var form = angular.module("ngForm",['ngAnimate']);
 
-    form.controller("formController",function($scope) {
-        $scope.formData = {};
-        $scope.submit = function() {
-            console.log("submit pressed!");
-        }
-    });
-
     form.directive('equals', function () {
         return {
             restrict: 'A',

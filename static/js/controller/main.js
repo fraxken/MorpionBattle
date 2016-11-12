@@ -47,6 +47,20 @@
     APP.controller("layoutController",function($scope,$timeout,$location) {
         console.log("layoutController loaded!");
 
+        $scope.popupOpen = false;
+        $scope.popupTemplate = "popups/creategame";
+        this.changePopup = function(name) {
+            $scope.popupTemplate = "popups/"+name;
+            $scope.popupOpen = true;
+        }
+        $scope.popupState = function(value) {
+            if(value != undefined && typeof value != "boolean") return;
+            $scope.popupOpen = value ? value : ($scope.popupOpen ? false : true);
+        }
+        $scope.getPopup = function() {
+            return $scope.popupTemplate;
+        }
+
     });
 
     APP.controller("lobby",function($scope,$location) {
@@ -56,6 +70,13 @@
             $location.path('logout');
         }
 
+    });
+
+    APP.controller("Form_creategame",function($scope,$location) {
+        $scope.formData = {};
+        $scope.submit = function() {
+
+        }
     });
 
 })();

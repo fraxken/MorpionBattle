@@ -1,0 +1,23 @@
+h1 Create game
+form(name="creategame",ng-controller="Form_creategame",ng-submit="submit()",novalidate,style="align-items: center")
+    nginput(
+        ng-model="formData.gameName",
+        name="gameName",
+        placeholder="Game name",
+        min="4",
+        max="20",
+        type="text",
+        form="form"
+    )
+    nginput(
+        ng-model="formData.password",
+        name="password",
+        placeholder="Password",
+        min="3",
+        max="30",
+        type="password",
+        form="form"
+    )
+    section.field-center
+        input(type="submit",ng-class="{'disabled' : creategame.$invalid}",ng-disabled="creategame.$invalid",value="Create")
+        button.red(ng-click="popupState(false)") Cancel

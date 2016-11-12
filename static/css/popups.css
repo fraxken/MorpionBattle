@@ -1,0 +1,28 @@
+#popupContainer {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(255,255,255,0.55);
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    #popupContainer > .popup {
+        width: 450px;
+        padding: 30px;
+        background: #FFF;
+        border: 1px solid #CCC;
+        border-radius: 2px;
+        min-height: 100px;
+        font-family: Roboto;
+    }
+        #popupContainer > .popup > h1 {
+            margin-bottom: 5px;
+        }
+        #popupContainer > .popup button {
+            height: 40px;
+            margin-left: 10px;
+        }
