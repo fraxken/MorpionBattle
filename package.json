@@ -1,8 +1,17 @@
 {
-    "name" : "MorpionBattle",
-    "version" : "0.0.1",
-    "description": "Morpion multiplayer game",
-    "scripts": {
-        "start" : "node app/index --harmony"
-    }
+  "name": "MorpionBattle",
+  "version": "0.0.1",
+  "description": "Morpion multiplayer game",
+  "scripts": {
+    "start": "node app/index --harmony",
+    "build": "typings install && ntsc",
+    "database": "node scripts/database --harmony"
+  },
+  "dependencies": {
+    "async": "^2.1.2",
+    "chalk": "^1.1.3",
+    "ntypescript": "^1.201609302242.1",
+    "rethinkdb": "^2.3.3",
+    "typings": "^2.0.0"
+  }
 }
