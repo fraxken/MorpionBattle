@@ -1,0 +1,8 @@
+{
+    "name" : "MorpionBattle",
+    "version" : "0.0.1",
+    "description": "Morpion multiplayer game",
+    "scripts": {
+        "start" : "node app/index --harmony"
+    }
+}
