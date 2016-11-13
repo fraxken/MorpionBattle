@@ -82,11 +82,12 @@ else {
         //io.use(koaSocketSession(app, session));
 
         const server = http.createServer(app.callback());
+
         const io = socketIO(server);
 
         io.on('connection', (socket) => {
             const cookie_id = cookie.parse(socket.request.headers.cookie);
-            console.log(cookie_id);
+            console.log(socket.session);
             console.log('user connected to the socket.io server!');
 
             socket.on(socketEvents.getServers, async () => {
@@ -115,6 +116,7 @@ else {
             this.db = database;
             this.conn = conn;
             this.session.username = "fraxken";
+            this.io = io;
             yield next;
         });
 

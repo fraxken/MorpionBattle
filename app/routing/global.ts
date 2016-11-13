@@ -11,6 +11,10 @@ router.get('/main/game', function *(next) {
 });
 
 router.get('/main/lobby', middleware.connected, function *(next) {
+    this.io.use( (socket, next) => {
+        socket.session = this.session.user;
+        next();
+    });
     this.render("lobby",this.session.user);
 });
 
