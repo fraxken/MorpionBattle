@@ -19,9 +19,8 @@ npm run database
 - [x] Inscription
 - [x] Authentification flash
 - [x] Connexion socket.io
-- [ ] Améliorer nginput (optionnal input)
+- [x] Améliorer nginput (optionnal input)
 - [ ] Gestion des parties (basique) avec mécanique.
 - [ ] Page jeu (avec dynamisme).
-- [ ] Schema transition
 
 > Finalize state!

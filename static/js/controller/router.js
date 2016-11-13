@@ -29,6 +29,9 @@
         .when('/logout', {
             templateUrl: 'authentification/logout',
         })
+        .when('/leave', {
+            templateUrl: 'leavegame',
+        })
         .otherwise({
             redirectTo: '/'
         });

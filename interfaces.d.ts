@@ -5,6 +5,8 @@ interface user {
     win?: number;
     loose?: number;
     elo?: number;
+    ingame?: boolean;
+    gamekey?: string;
 }
 
 interface iConfiguration {

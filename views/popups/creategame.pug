@@ -12,12 +12,12 @@ form(name="creategame",ng-controller="Form_creategame",ng-submit="submit()",nova
     nginput(
         ng-model="formData.password",
         name="password",
-        placeholder="Password",
-        min="3",
+        placeholder="Password (Optional)",
+        min="4",
         max="30",
         type="password",
         form="form"
     )
     section.field-center
-        input(type="submit",ng-class="{'disabled' : creategame.$invalid}",ng-disabled="creategame.$invalid",value="Create")
+        input(type="submit",ng-class="{'disabled' : creategame.gameName.$invalid}",ng-disabled="creategame.gameName.$invalid",value="Create")
         button.red(ng-click="popupState(false)") Cancel

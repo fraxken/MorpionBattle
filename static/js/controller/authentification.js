@@ -14,7 +14,6 @@
         $scope.formData = {};
         $scope.show = false;
         $scope.flashMsg = "";
-        var self = $scope;
         $scope.showFlash = (msg) => {
             $scope.show = true;
             $scope.flashMsg = msg;

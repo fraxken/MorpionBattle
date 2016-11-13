@@ -24,6 +24,7 @@ router.post('/login', function *(next) {
             const Userdata : user = data[0];
             delete Userdata.password;
             delete Userdata.id;
+            Userdata.ingame = false;
             console.log(`${Userdata.login} is now connected to morpionBattle!`);
             this.session.user = Userdata;
         }
@@ -75,7 +76,8 @@ router.post('/register', function *(next) {
                     password: toSHA256(password),
                     elo: 0,
                     win: 0,
-                    loose: 0
+                    loose: 0,
+                    ingame: false
                 };
                 const rc = yield this.db.table('users').insert(user).run(this.conn);
                 delete user.password;

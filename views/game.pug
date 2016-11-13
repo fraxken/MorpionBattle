@@ -1,6 +1,6 @@
-section(id="game")
+section(id="game",ng-controller="game")
     header
-        h1 Waiting for players
+        h1 #{gamekey}
     main
         aside
             section.round
@@ -22,7 +22,7 @@ section(id="game")
             section.player.inactive
                 p Available
             section.options
-                button Leave
+                button(ng-click="leave()") Leave
         section(class="morpion")
             section.line
                 section.case.green: .round

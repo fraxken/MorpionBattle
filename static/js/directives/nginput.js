@@ -25,6 +25,17 @@
         };
     });
 
+    form.directive('removeValidation', function(){
+        return {
+            require : 'ngModel',
+            link : function(scope, element, attrs, ngModel) {
+                ngModel.$validators["password"] = function () {
+                    return true;
+                };
+            }
+        }
+    });
+
     form.directive("nginput", function($compile){
         return {
             require: "ngModel",

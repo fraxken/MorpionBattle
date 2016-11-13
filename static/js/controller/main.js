@@ -68,6 +68,11 @@
         $scope.logout = () => $location.path('logout',true);
     });
 
+    APP.controller("game",function($scope,$location) {
+        if($location.path() != "/game") $location.path("/game",false);
+        $scope.leave = () => $location.path('leave',true);
+    });
+
     APP.controller("serversList",function($scope,socket) {
 
         $scope.serversList = [];
@@ -85,10 +90,20 @@
         });
     });
 
-    APP.controller("Form_creategame",function($scope,$location) {
+    APP.controller("Form_creategame",function($scope,$location,$http) {
         $scope.formData = {};
         $scope.submit = function() {
-
+            $http.post('/creategame', {
+                formData: $scope.formData
+            }).success(function (data, status, headers, config) {
+                console.log(data);
+                if (data.errCode == 1) {
+                    $location.path("game");
+                }
+                else {
+                    //$scope.showFlash(data.errorMessage);
+                }
+            });
         }
     });
 
