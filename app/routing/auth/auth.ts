@@ -3,7 +3,9 @@
 
 import * as path from "path";
 import {toSHA256} from "../../core/utils";
+
 const middleware    = require(path.join(__dirname,"../../","core/middleware.js"));
+const errors        = require('../../data/errors.json').auth;
 
 const router = module.exports = require('koa-router')({
     prefix : "/authentification"
@@ -14,9 +16,6 @@ router.post('/login', function *(next) {
     const password: string  = this.request.body.formData.password;
 
     if(login !== "undefined" && password !== "undefined") {
-
-        // TODO: Type check
-        // TODO: Length check
 
         const cursor = yield this.db.table('users').filter( {login: login, password: toSHA256(password) } ).run(this.conn);
         const data : user[] = yield cursor.toArray();
@@ -30,21 +29,74 @@ router.post('/login', function *(next) {
         }
         this.body = {
             errCode: valid ? 1 : 0,
-            errorMessage: valid ? "" : "User not found!"
+            errorMessage: valid ? "" : errors.notfound
         };
     }
     else {
         this.body = {
             errCode: 0,
-            errorMessage: "Undefined login or password!"
+            errorMessage: errors.undefined
         }
     }
 });
 
 router.post('/register', function *(next) {
-    console.log(this.request.body);
-    this.body = {
-        errCode : 1
+    const login: string             = this.request.body.formData.login;
+    const password: string          = this.request.body.formData.password;
+    const passwordRepeat: string    = this.request.body.formData.passwordRepeat;
+
+    if(login !== "undefined" && password !== "undefined" && passwordRepeat !== "undefined") {
+
+        if(password !== passwordRepeat) {
+            this.body = {
+                errCode: 0,
+                errorMessage: errors.repeat
+            }
+        }
+
+        // TODO: Password Regex check!
+        let err: boolean = false;
+        if((login.length < 2 || login.length > 12)) {
+            err = true;
+        }
+
+        if(err) {
+            this.body = {
+                errCode: 0,
+                errorMessage: errors.format
+            }
+        }
+        else {
+            const cursor = yield this.db.table('users').filter( {login: login, password: toSHA256(password) } ).run(this.conn);
+            const data : user[] = yield cursor.toArray();
+            if(data.length === 0) {
+                const user : user = {
+                    login: login,
+                    password: toSHA256(password),
+                    elo: 0,
+                    win: 0,
+                    loose: 0
+                };
+                const rc = yield this.db.table('users').insert(user).run(this.conn);
+                delete user.password;
+                this.session.user = user;
+                this.body = {
+                    errCode: 1
+                }
+            }
+            else {
+                this.body = {
+                    errCode: 0,
+                    errorMessage: errors.taken
+                }
+            }
+        }
+    }
+    else {
+        this.body = {
+            errCode: 0,
+            errorMessage: errors.undefined
+        }
     }
 });
 

@@ -10,8 +10,19 @@
         }
     });
 
-    Authentification.controller("Auth_login",function($scope,$http,$location) {
+    Authentification.controller("Auth_login",function($scope,$http,$location,$timeout) {
         $scope.formData = {};
+        $scope.show = false;
+        $scope.flashMsg = "";
+        var self = $scope;
+        $scope.showFlash = (msg) => {
+            $scope.show = true;
+            $scope.flashMsg = msg;
+            $timeout( _ => {
+                $scope.show = false;
+            },4500);
+        }
+
         $scope.submit = function() {
             $http.post('/authentification/login', {
                 formData: $scope.formData
@@ -20,11 +31,24 @@
                 if (data.errCode == 1) {
                     $location.path("lobby");
                 }
+                else {
+                    $scope.showFlash(data.errorMessage);
+                }
             });
         }
     });
-    Authentification.controller("Auth_register",function($scope,$http,$location) {
+    Authentification.controller("Auth_register",function($scope,$http,$location,$timeout) {
         $scope.formData = {};
+        $scope.show = false;
+        $scope.flashMsg = "";
+        $scope.showFlash = (msg) => {
+            $scope.show = true;
+            $scope.flashMsg = msg;
+            $timeout( _ => {
+                $scope.show = false;
+            },4500);
+        }
+
         $scope.submit = function() {
             $http.post('/authentification/register', {
                 formData: $scope.formData
@@ -32,6 +56,9 @@
                 console.log(data);
                 if (data.errCode == 1) {
                     $location.path("lobby");
+                }
+                else {
+                    $scope.showFlash(data.errorMessage);
                 }
             });
         }

@@ -10,7 +10,7 @@
 }
 
 #authentification {
-    width: 50%;
+    width: 60vw;
     min-height: 400px;
     display: flex;
     margin-top: 30px;
@@ -32,7 +32,7 @@
         border: 2px solid #CCC;
         border-radius: 2px;
         background: #FFF;
-        padding: 10px;
+        padding: 20px;
     }
 
     #authentification > .register {

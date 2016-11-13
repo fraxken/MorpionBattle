@@ -1,15 +1,18 @@
 h1 Morpion Battle
 span Multiplayers Morpion games
 section(id="authentification",ng-controller="Auth_root")
-    section(class="register")
+    section(class="register",ng-controller="Auth_login")
         h2 Login
-        form(name="signin",ng-controller="Auth_login",ng-submit="submit()",novalidate)
+        section.popupAnimation(class="flash",ng-show="show === true")
+            i(class="fa fa-exclamation-circle")
+            p {{flashMsg}}
+        form(name="signin",ng-submit="submit()",novalidate)
             nginput(
                 ng-model="formData.login",
                 name="login",
                 placeholder="Login",
-                min="6",
-                max="50",
+                min="2",
+                max="12",
                 type="text",
                 form="form"
             )
@@ -18,21 +21,24 @@ section(id="authentification",ng-controller="Auth_root")
                 name="password",
                 placeholder="Password",
                 min="8",
-                max="30",
+                max="24",
                 type="password",
                 form="form"
             )
             // Submit input
             input(type="submit",ng-class="{'disabled' : signin.$invalid}",ng-disabled="signin.$invalid",value="Login")
-    section(class="login")
+    section(class="login",ng-controller="Auth_register")
         h2 Register account
-        form(name="register",ng-controller="Auth_register",ng-submit="submit()",novalidate)
+        section.popupAnimation(class="flash",ng-show="show === true")
+            i(class="fa fa-exclamation-circle")
+            p {{flashMsg}}
+        form(name="register",ng-submit="submit()",novalidate)
             nginput(
                 ng-model="formData.login",
                 name="login",
                 placeholder="Login",
-                min="6",
-                max="50",
+                min="2",
+                max="12",
                 type="text",
                 form="form"
             )
@@ -41,7 +47,7 @@ section(id="authentification",ng-controller="Auth_root")
                 name="password",
                 placeholder="Password",
                 min="8",
-                max="30",
+                max="24",
                 type="password",
                 form="form"
             )
@@ -50,7 +56,7 @@ section(id="authentification",ng-controller="Auth_root")
                 name="password_repeat",
                 placeholder="Password repeat",
                 min="8",
-                max="30",
+                max="24",
                 type="password",
                 form="form"
             )

@@ -1,0 +1,9 @@
+{
+    "auth": {
+        "repeat": "Password repeat is invalid!",
+        "undefined": "Undefined login or password",
+        "format": "Invalid format for login or password",
+        "taken": "This login is already used",
+        "notfound": "Account not found"
+    }
+}
