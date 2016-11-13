@@ -17,7 +17,8 @@ npm run database
 # Todo
 
 - [ ] Inscription
-- [ ] Connexion socket.io
+- [ ] Authentification flash
+- [x] Connexion socket.io
 - [ ] Améliorer nginput (optionnal input)
 - [ ] Gestion des parties (basique) avec mécanique.
 - [ ] Page jeu (avec dynamisme).
