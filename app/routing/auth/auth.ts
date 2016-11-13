@@ -5,7 +5,7 @@ import * as path from "path";
 import {toSHA256} from "../../core/utils";
 
 const middleware    = require(path.join(__dirname,"../../","core/middleware.js"));
-const errors        = require('../../data/errors.json').auth;
+const errors        = require('../../../data/errors.json').auth;
 
 const router = module.exports = require('koa-router')({
     prefix : "/authentification"
