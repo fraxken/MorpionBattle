@@ -22,7 +22,7 @@ database.connect(configuration.database, function (err: Error, conn: database.Co
     const doTasks : () => Promise<{}> = () => {
         return new Promise( (resolve : (value: {} | PromiseLike<{}>) => void,reject: any) : void => {
             type fallAction = (fall: any) => void;
-            const tasks : fallAction[] = [createTableUsers, insertUsers];
+            const tasks : fallAction[] = [createTableUsers,createTableGame, insertUsers];
 
             // Check if table users already exists
             database.db(configuration.database.db).tableList().run(conn, (err: Error, list: string[]) : void => {
@@ -30,6 +30,9 @@ database.connect(configuration.database, function (err: Error, conn: database.Co
                 list.forEach( (tablename: string,index: number,array: string[]) : void => {
                     if (tablename === 'users') {
                         tasks.unshift(dropTableUsers);
+                    }
+                    else if(tablename === 'game') {
+                        tasks.unshift(dropTableGame);
                     }
                 });
             }).then( () => {
@@ -52,6 +55,21 @@ database.connect(configuration.database, function (err: Error, conn: database.Co
                     fall();
                 });
             }
+            function dropTableGame(fall) {
+                database.db(configuration.database.db).tableDrop('game').run(conn, (err: Error) => {
+                    if(err) console.log(err);
+                    console.log(chalk.green('Drop of table game sucessfull.'));
+                    fall();
+                });
+            }
+            function createTableGame(fall) {
+                database.db(configuration.database.db).tableCreate('game').run(conn, (err: Error)  => {
+                    if(err) console.log(err);
+                    console.log(chalk.green('Creation of table game sucessfull.'));
+                    fall();
+                });
+            }
+
             function insertUsers(fall) {
                 sync.each(users,(user: user,next: any) : void => {
                     database.table('users').insert(user).run(conn, (err: Error) => {
