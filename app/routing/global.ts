@@ -40,9 +40,27 @@ router.post('/creategame', function *(next) {
 });
 
 router.get('/leavegame', middleware.inGame, function *(next) {
-    this.session.user.gamekey = null;
-    this.session.user.ingame = false;
-    this.redirect('/main/lobby');
+    const gamekey: string = this.session.user.gamekey;
+    const game = yield this.db.table('game').get(gamekey).run(this.conn);
+    if(game) {
+        game.player.splice(game.player.indexOf(this.session.user.login),1);
+        if(game.player.length > 0) {
+            console.log("update game!");
+            yield this.db.table('game').get(gamekey).update({player: game.player}).run(this.conn);
+        }
+        else {
+            console.log("delete game!");
+            yield this.db.table('game').get(gamekey).delete().run(this.conn);
+        }
+        this.session.user.gamekey = null;
+        this.session.user.ingame = false;
+        this.redirect('/main/lobby');
+    }
+    else {
+        console.log("no game find!");
+        this.statusCode = 404;
+        this.body = "Unknow error!";
+    }
 });
 
 router.post('/finishgame', middleware.inGame, function *(next) {
@@ -50,7 +68,6 @@ router.post('/finishgame', middleware.inGame, function *(next) {
 });
 
 router.get('/main/game', middleware.inGame, function *(next) {
-    console.log(this.session.user.gamekey);
     this.render("game",{gamekey: this.session.user.gamekey });
 });
 

@@ -86,8 +86,6 @@ else {
         const io = socketIO(server);
 
         io.on('connection', (socket) => {
-            const cookie_id = cookie.parse(socket.request.headers.cookie);
-            console.log(socket.session);
             console.log('user connected to the socket.io server!');
 
             socket.on(socketEvents.getServers, async () => {
@@ -95,12 +93,26 @@ else {
                 const data : any[] = await cursor.toArray();
                 if(data.length > 0) {
                     const serversList = [];
-                    data.forEach( v => serversList.push({name: v.name,password: v.password ? true : false}) );
+                    data.forEach( gameData => {
+                        const gameLength: number = gameData.player ? gameData.player.length : 1;
+                        serversList.push({
+                            id: gameData.id,
+                            name: gameData.name,
+                            password: gameData.lock,
+                            playerCount: gameLength
+                        })
+                    });
                     io.emit(socketEvents.serversList,serversList);
                 }
                 else {
                     io.emit(socketEvents.serversList,null);
                 }
+            });
+
+            database.table('game').changes().run(conn,(err,cursor) => {
+                cursor.each( (_,row) => {
+                    console.log(row);
+                });
             });
 
             socket.on(socketEvents.createGame, (data) => {

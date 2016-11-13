@@ -15,9 +15,11 @@ section(id="lobby",ng-controller="lobby")
     main
         section(class="serversList",ng-controller="serversList")
             section(class="server",ng-repeat="(k,v) in serversList")
-                p(class="lock"): i(class="fa fa-lock")
+                p(class="lock")
+                    i(class="fa fa-lock",ng-show="v.password === true")
+                    i(class="fa fa-unlock",ng-show="v.password === false")
                 p(class="name") {{v.name}}
-                span 1/3
+                span {{v.playerCount}}/3
         section(class="options")
             button(ng-click="popupState(true)") Create Game
             button.inactive Join

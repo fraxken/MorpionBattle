@@ -8,12 +8,7 @@
         'authentification'
     ]);
 
-    APP.value('user',{
-        username: "fraxken",
-        win: 50,
-        loose: 10,
-        elo: 0
-    });
+    APP.value('popupOpen',false);
 
     APP.directive('head', ['$rootScope','$compile',function($rootScope, $compile){
         return {
