@@ -16,8 +16,8 @@ npm run database
 
 # Todo
 
-- [ ] Inscription
-- [ ] Authentification flash
+- [x] Inscription
+- [x] Authentification flash
 - [x] Connexion socket.io
 - [ ] Améliorer nginput (optionnal input)
 - [ ] Gestion des parties (basique) avec mécanique.
