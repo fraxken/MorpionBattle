@@ -1,0 +1,6 @@
+{
+    "createGame" : "createGame",
+    "joinGame": "joinGame",
+    "getServers": "getServers",
+    "serversList": "serversList"
+}

@@ -27,6 +27,7 @@ const koaSocketSession  = require('koa-socket-session');
 const koaSocket         = require('koa-socket.io');
 
 const configuration: iConfiguration = require('../configuration.json');
+const socketEvents = require('../data/socket-events.json');
 //const numCPUs : number = os.cpus().length;
 const numCPUs : number = 1;
 
@@ -88,17 +89,25 @@ else {
             console.log(cookie_id);
             console.log('user connected to the socket.io server!');
 
-            socket.on( 'getServers', async () => {
+            socket.on(socketEvents.getServers, async () => {
                 const cursor : any = await database.table('game').run(conn);
                 const data : any[] = await cursor.toArray();
                 if(data.length > 0) {
                     const serversList = [];
                     data.forEach( v => serversList.push({name: v.name,password: v.password ? true : false}) );
-                    io.emit('serversList',serversList);
+                    io.emit(socketEvents.serversList,serversList);
                 }
                 else {
-                    io.emit('serversList',null);
+                    io.emit(socketEvents.serversList,null);
                 }
+            });
+
+            socket.on(socketEvents.createGame, (data) => {
+
+            });
+
+            socket.on(socketEvents.joinGame, (data) => {
+
             });
         });
 
