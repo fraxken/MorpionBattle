@@ -13,14 +13,10 @@ section(id="lobby",ng-controller="lobby")
             h2 elo
             span #{elo}
     main
-        section(class="serversList")
-            section(class="server")
+        section(class="serversList",ng-controller="serversList")
+            section(class="server",ng-repeat="(k,v) in serversList")
                 p(class="lock"): i(class="fa fa-lock")
-                p(class="name") Name
-                span 1/3
-            section(class="server")
-                p(class="lock"): i(class="fa fa-unlock")
-                p Name
+                p(class="name") {{v.name}}
                 span 1/3
         section(class="options")
             button(ng-click="popupState(true)") Create Game

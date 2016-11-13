@@ -63,13 +63,26 @@
 
     });
 
-    APP.controller("lobby",function($scope,$location,socket) {
+    APP.controller("lobby",function($scope,$location) {
         if($location.path() != "/lobby") $location.path("/lobby",false);
+        $scope.logout = () => $location.path('logout',true);
+    });
 
-        $scope.logout = function() {
-            $location.path('logout',true);
-        }
+    APP.controller("serversList",function($scope,socket) {
 
+        $scope.serversList = [];
+
+        // Get serversList !
+        socket.emit('getServers');
+
+        socket.on('serversList',serversList => {
+            if(serversList === "undefined") {
+
+            }
+            else {
+                $scope.serversList = serversList;
+            }
+        });
     });
 
     APP.controller("Form_creategame",function($scope,$location) {

@@ -15,5 +15,9 @@
         "iteration": 15000,
         "saltSize": 512,
         "hashSize": 512
+    },
+    "redis" : {
+        "host" : "localhost",
+        "port" : 6379
     }
 }

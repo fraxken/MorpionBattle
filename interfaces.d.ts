@@ -24,6 +24,10 @@ interface iConfiguration {
         iteration: number;
         saltSize: number;
         hashSize: number;
+    };
+    redis: {
+        host: string;
+        port: number;
     }
 }
 

@@ -10,6 +10,7 @@ import * as sync from "async";
 import * as database from "rethinkdb";
 import * as path from "path";
 import * as loader from "./core/autoloader";
+import * as http from "http";
 
 const koa               = require('koa');
 const helmet            = require('koa-helmet');
@@ -18,6 +19,12 @@ const koaPug            = require('koa-pug');
 const bodyParser        = require('koa-bodyparser');
 const koaJson           = require('koa-json');
 const koaRouter         = require('koa-router');
+const socketIO          = require('socket.io');
+const RedisStore        = require('koa-redis');
+const redis             = require('socket.io-redis');
+const cookie            = require('cookie');
+const koaSocketSession  = require('koa-socket-session');
+const koaSocket         = require('koa-socket.io');
 
 const configuration: iConfiguration = require('../configuration.json');
 //const numCPUs : number = os.cpus().length;
@@ -60,16 +67,45 @@ else {
 
         // Session middleware implementation !
         app.keys = ['keys', 'keykeys'];
-        const session = sessions();
+        const session = sessions({
+            store: new RedisStore(configuration.redis),
+            saveUninitialized: true,
+            resave: true
+        });
 
         app.use(session);
         app.use( bodyParser() );
         //app.use( helmet() );
         app.use( koaJson() );
 
+        //io.use(koaSocketSession(app, session));
+
+        const server = http.createServer(app.callback());
+        const io = socketIO(server);
+
+        io.on('connection', (socket) => {
+            const cookie_id = cookie.parse(socket.request.headers.cookie);
+            console.log(cookie_id);
+            console.log('user connected to the socket.io server!');
+
+            socket.on( 'getServers', async () => {
+                const cursor : any = await database.table('game').run(conn);
+                const data : any[] = await cursor.toArray();
+                if(data.length > 0) {
+                    const serversList = [];
+                    data.forEach( v => serversList.push({name: v.name,password: v.password ? true : false}) );
+                    io.emit('serversList',serversList);
+                }
+                else {
+                    io.emit('serversList',null);
+                }
+            });
+        });
+
         app.use( function *(next) {
             this.db = database;
             this.conn = conn;
+            this.session.username = "fraxken";
             yield next;
         });
 
@@ -81,12 +117,9 @@ else {
                 app.use( Router.routes() ).use( Router.allowedMethods() );
             });
 
-            app.listen( configuration.app.port );
+            server.listen( configuration.app.port );
 
         }).catch( errMessage => console.log(errMessage) );
-
-        const Router = new koaRouter();
-
 
         const closeHandler : () => void = () => {
             process.exit();
