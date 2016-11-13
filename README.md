@@ -21,13 +21,17 @@ npm run database
 - [x] Authentification flash
 - [x] Connexion socket.io
 - [x] Améliorer nginput (optionnal input)
-- [ ] Gestion des parties (basique) avec mécanique.
-- [ ] Page jeu (avec dynamisme).
+- [ ] Refaire l'objet serversList avec un Objet contenant les IDs.
+- [ ] Ajouter au middleware les tables directement (plus propre).
+- [ ] Mettre à jour le typage du projet.
+- [ ] Développer le bouton "Join"
+- [ ] Mettre en place la connexion socket ingame!
 
 # Contribution welcome
 
 - [ ] Meilleur inscription/connexion (plus sécurisé).
 - [ ] Un script pour crée un utilisateur (sympa pour les tests!).
-- [ ] Amélioration du script database ! 
+- [ ] Amélioration du script database !
+- [ ] Ajouter un système d'avatar!
 
 > Finalize state!
