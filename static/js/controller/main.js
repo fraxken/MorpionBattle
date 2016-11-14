@@ -71,6 +71,8 @@
     APP.controller("serversList",function($scope,socket) {
 
         $scope.serversList = [];
+        $scope.serverSelected = false;
+        $scope.gameid = null;
 
         // Get serversList !
         socket.emit('getServers');
@@ -83,6 +85,19 @@
                 $scope.serversList = serversList;
             }
         });
+
+        $scope.selectGame = function(gameId) {
+            $scope.serverSelected = true;
+            $scope.gameid = gameId;
+            console.log(gameId);
+        }
+
+        $scope.joinGame = function() {
+            if($scope.gameid) {
+                console.log($scope.gameid);
+                socket.emit('joinGame',{id: $scope.gameid});
+            }
+        }
     });
 
     APP.controller("Form_creategame",function($scope,$location,$http) {

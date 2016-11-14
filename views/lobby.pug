@@ -12,9 +12,9 @@ section(id="lobby",ng-controller="lobby")
         section(class="stats elo")
             h2 elo
             span #{elo}
-    main
-        section(class="serversList",ng-controller="serversList")
-            section(class="server",ng-repeat="(k,v) in serversList")
+    main(ng-controller="serversList")
+        section(class="serversList")
+            section(class="server",ng-class="{'focus': focus}",ng-repeat="(k,v) in serversList",ng-click="selectGame(v.id);focus = true")
                 p(class="lock")
                     i(class="fa fa-lock",ng-show="v.password === true")
                     i(class="fa fa-unlock",ng-show="v.password === false")
@@ -22,4 +22,4 @@ section(id="lobby",ng-controller="lobby")
                 span {{v.playerCount}}/3
         section(class="options")
             button(ng-click="popupState(true)") Create Game
-            button.inactive Join
+            button(ng-class="{ 'inactive' : serverSelected === false }",ng-click="joinGame()") Join

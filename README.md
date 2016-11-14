@@ -22,9 +22,9 @@ npm run database
 - [x] Connexion socket.io
 - [x] Améliorer nginput (optionnal input)
 - [ ] Refaire l'objet serversList avec un Objet contenant les IDs.
-- [ ] Ajouter au middleware les tables directement (plus propre).
+- [x] Ajouter au middleware les tables directement (plus propre).
 - [ ] Mettre à jour le typage du projet.
-- [ ] Développer le bouton "Join"
+- [ ] Développer le bouton "Join" (=> En cours)
 - [ ] Mettre en place la connexion socket ingame!
 
 # Contribution welcome

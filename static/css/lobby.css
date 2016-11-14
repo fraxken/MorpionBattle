@@ -99,12 +99,23 @@
         #lobby > main > .serversList .server {
             flex-basis: 45px;
             min-height: 45px;
-            background: #CFD8DC;
+            background: #ECEFF1;
             display: flex;
             padding: 0 20px;
             align-items: center;
             flex-shrink: 0;
+            transition: all 0.2s linear;
+            box-sizing: border-box;
+            color: #37474F;
         }
+            #lobby > main > .serversList .server:not(.focus):hover {
+                cursor: pointer;
+                background: #CFD8DC;
+            }
+            #lobby > main > .serversList .server.focus {
+                border: 2px solid #3D5AFE;
+                color: #3D5AFE;
+            }
             #lobby > main > .serversList .server > p.lock {
                 width: 20px;
                 height: 20px;
@@ -116,7 +127,6 @@
             #lobby > main > .serversList .server > p.name {
                 font-size: 16px;
                 font-weight: bold;
-                color: #37474F;
             }
             #lobby > main > .serversList .server > span {
                 width: 25px;
@@ -132,6 +142,10 @@
                 margin-left: auto;
                 justify-content: center;
             }
+            #lobby > main > .serversList .server.focus > span {
+                background: #3D5AFE;
+            }
+            
         #lobby > main > .serversList .server + .server {
             margin-top: 5px;
         }

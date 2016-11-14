@@ -120,8 +120,15 @@ else {
             });
 
             socket.on(socketEvents.joinGame, (data) => {
+                console.log("User requested to join the game with gameid => "+data.id);
 
+                // TODO: Ingame or ?
+                // TODO: Check if the game is complete
+                // TODO: Ask for password (if present reserve slot)
+                // TODO: Else join directly the game
             });
+
+            // TODO: Password event!
         });
 
         app.use( function *(next) {
@@ -129,6 +136,8 @@ else {
             this.conn = conn;
             this.session.username = "fraxken";
             this.io = io;
+            this.gameDB = database.table('game');
+            this.userDB = database.table('users');
             yield next;
         });
 
