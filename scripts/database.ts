@@ -1,104 +1,50 @@
 /// <reference path="../typings/index.d.ts" />
 /// <reference path="../interfaces.d.ts" />
+
 // Import dependencies
 import * as chalk from "chalk";
-import * as sync from "async";
+import * as async from "async";
 import * as database from "rethinkdb";
-// Load JSON files
+import {RethinkDB_Manager} from "./class/RethinkDB_manager";
+
+//process.on('unhandledRejection', console.log.bind(console));
+
+// Load configuration file!
 const configuration : iConfiguration = require('../configuration.json');
+
+const sleep = function(timeMs: number) : Promise<void> {
+    return new Promise<void>( (accept,reject) => setTimeout(accept, timeMs));
+}
+
 /*
     Connect to the database
 */
-database.connect(configuration.database, function (err: Error, conn: database.Connection) {
+database.connect(configuration.database, async (err: Error, conn: database.Connection) => {
     if(err) {
-        const error = err.message.split('\n');
-        console.log(chalk.red(error[0]));
+        console.log(chalk.red(err.message.split('\n')[0]));
         return;
     }
-
-    // Require data
-    const users : user[] = require('../data/users.json').users;
-
-    const doTasks : () => Promise<{}> = () => {
-        return new Promise( (resolve : (value: {} | PromiseLike<{}>) => void,reject: any) : void => {
-            type fallAction = (fall: any) => void;
-            const tasks : fallAction[] = [createTableUsers,createTableGame, insertUsers];
-
-            // Check if table users already exists
-            database.db(configuration.database.db).tableList().run(conn, (err: Error, list: string[]) : void => {
-                if(err) throw err;
-                list.forEach( (tablename: string,index: number,array: string[]) : void => {
-                    if (tablename === 'users') {
-                        tasks.unshift(dropTableUsers);
-                    }
-                    else if(tablename === 'game') {
-                        tasks.unshift(dropTableGame);
-                    }
-                });
-            }).then( () => {
-                sync.waterfall(tasks, (err: Error) : void => {
-                    if(err) reject(err);
-                    resolve('All actions are done !');
-                });
-            });
-            function dropTableUsers(fall) {
-                database.db(configuration.database.db).tableDrop('users').run(conn, (err: Error) => {
-                    if(err) console.log(err);
-                    console.log(chalk.green('Drop of table users sucessfull.'));
-                    fall();
-                });
-            }
-            function createTableUsers(fall) {
-                database.db(configuration.database.db).tableCreate('users').run(conn, (err: Error)  => {
-                    if(err) console.log(err);
-                    console.log(chalk.green('Creation of table users sucessfull.'));
-                    fall();
-                });
-            }
-            function dropTableGame(fall) {
-                database.db(configuration.database.db).tableDrop('game').run(conn, (err: Error) => {
-                    if(err) console.log(err);
-                    console.log(chalk.green('Drop of table game sucessfull.'));
-                    fall();
-                });
-            }
-            function createTableGame(fall) {
-                database.db(configuration.database.db).tableCreate('game').run(conn, (err: Error)  => {
-                    if(err) console.log(err);
-                    console.log(chalk.green('Creation of table game sucessfull.'));
-                    fall();
-                });
-            }
-
-            function insertUsers(fall) {
-                sync.each(users,(user: user,next: any) : void => {
-                    database.table('users').insert(user).run(conn, (err: Error) => {
-                        if(err) console.log(err);
-                        console.log(`User => ${chalk.yellow(user.login)} inserted into the users table!`);
-                        next();
-                    });
-                }, (err: any) => {
-                    if(err) reject(err);
-                    console.log(chalk.green('All users have been inserted'));
-                    fall();
-                });
-            }
-        });
-    }
-
-    // Execute the promise
-    doTasks()
-    .then( (finalMsg: string) : void => {
-        console.log(chalk.green(finalMsg));
-        process.exit();
-    })
-    .catch( (errMessage: string) : void  => {
-        throw new Error(errMessage);
-    });
-    const closeHandler : () => void = () => {
-        conn.close();
-    };
+    const closeHandler : () => void = () => conn.close();
     process.on('exit',closeHandler);
     process.on('SIGINT',closeHandler);
     process.on('uncaughtException',closeHandler);
+
+    // Require data
+    const usersArray : user[] = require('../data/users.json').users;
+
+    // Configure default table!
+    const dbTables: string[] = ['users','game'];
+
+    const dbManager: RethinkDB_Manager = new RethinkDB_Manager(configuration.database.db,conn);
+
+    console.log(chalk.green('Executing actions...'));
+    await dbManager.tableDeleteBulk(dbTables);
+    await sleep(1000);
+    await dbManager.tableCreateBulk(dbTables);
+    await sleep(3000);
+    await dbManager.tableHydrate<user>('users',usersArray);
+    console.log(chalk.green('Executing actions done!'));
+
+    closeHandler();
+    process.exit(0);
 });
