@@ -13,7 +13,7 @@ import {RethinkDB_Manager} from "./class/RethinkDB_manager";
 const configuration : iConfiguration = require('../configuration.json');
 
 const sleep = function(timeMs: number) : Promise<void> {
-    return new Promise<void>( (accept,reject) => setTimeout(accept, timeMs));
+    return new Promise<void>( (resolve,reject) => setTimeout(resolve, timeMs));
 }
 
 /*

@@ -16,7 +16,7 @@ export class RethinkDB_Manager {
 
     public async tableDeleteBulk(tablesNames: string[]) : Promise<void> {
         const tablesList: string[] = await this.db.tableList().run(this.conn);
-        await new Promise( (accept,reject) => {
+        await new Promise( (resolve,reject) => {
             async.each(tablesNames,(tableName: string,callback: () => any) => {
                 tablesList.forEach( (v:string) => {
                     if(v === tableName) {
@@ -26,19 +26,19 @@ export class RethinkDB_Manager {
                 callback();
             },(err:Error) => {
                 if(err) reject(err);
-                accept();
+                resolve();
             });
         });
     }
 
     public async tableCreateBulk(tablesNames: string[]) : Promise<void> {
-        await new Promise( (accept,reject) => {
+        await new Promise( (resolve,reject) => {
             async.each(tablesNames,(tableName: string,callback: () => any) => {
                 this.tableCreate(tableName)
                 callback();
             },(err:Error) => {
                 if(err) reject(err);
-                accept();
+                resolve();
             });
         });
     }
