@@ -1,11 +1,12 @@
 /// <reference path="../../typings/index.d.ts" />
 
 import * as path from "path";
+import * as koaRouter from "koa-router";
+import * as middleware from "../core/middleware";
 
-const middleware = require(path.join(__dirname,"../","core/middleware.js"));
-const router = module.exports = require('koa-router')();
+const router: koaRouter = new koaRouter();
 
-router.post('/creategame', function *(next) {
+router.post('/creategame', function *(next: koaRouter.IRouterContext) {
     const gameName: string = this.request.body.formData.gameName;
     const password: string = this.request.body.formData.password;
     if(!this.session.user.ingame) {
@@ -39,7 +40,7 @@ router.post('/creategame', function *(next) {
     }
 });
 
-router.get('/leavegame', middleware.inGame, function *(next) {
+router.get('/leavegame', middleware.inGame, function *(next: koaRouter.IRouterContext) {
     const gamekey: string = this.session.user.gamekey;
     const game = yield this.db.table('game').get(gamekey).run(this.conn);
     if(game) {
@@ -63,15 +64,15 @@ router.get('/leavegame', middleware.inGame, function *(next) {
     }
 });
 
-router.post('/finishgame', middleware.inGame, function *(next) {
+router.post('/finishgame', middleware.inGame, function *(next: koaRouter.IRouterContext) {
 
 });
 
-router.get('/main/game', middleware.inGame, function *(next) {
+router.get('/main/game', middleware.inGame, function *(next: koaRouter.IRouterContext) {
     this.render("game",{gamekey: this.session.user.gamekey });
 });
 
-router.get('/main/lobby', middleware.connected, function *(next) {
+router.get('/main/lobby', middleware.connected, function *(next: koaRouter.IRouterContext) {
     this.io.use( (socket, next) => {
         socket.session = this.session.user;
         next();
@@ -79,10 +80,10 @@ router.get('/main/lobby', middleware.connected, function *(next) {
     this.render("lobby",this.session.user);
 });
 
-router.get('/main/authentification', middleware.notConnected, function *(next) {
+router.get('/main/authentification', middleware.notConnected, function *(next: koaRouter.IRouterContext) {
     this.render("auth");
 });
 
-router.get('/', function *(next) {
+router.get('/', function *(next: koaRouter.IRouterContext) {
     this.render("layout");
 });

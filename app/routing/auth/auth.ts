@@ -2,16 +2,17 @@
 /// <reference path="../../../interfaces.d.ts" />
 
 import * as path from "path";
+import * as koaRouter from "koa-router";
+import * as middleware from "../../core/middleware";
 import {toSHA256} from "../../core/utils";
 
-const middleware    = require(path.join(__dirname,"../../","core/middleware.js"));
-const errors        = require('../../../data/errors.json').auth;
+const errors = require('../../../data/errors.json').auth;
 
-const router = module.exports = require('koa-router')({
+const router: koaRouter = new koaRouter({
     prefix : "/authentification"
 });
 
-router.post('/login', function *(next) {
+router.post('/login', function *(next: koaRouter.IRouterContext) {
     const login: string     = this.request.body.formData.login;
     const password: string  = this.request.body.formData.password;
 
@@ -41,7 +42,7 @@ router.post('/login', function *(next) {
     }
 });
 
-router.post('/register', function *(next) {
+router.post('/register', function *(next: koaRouter.IRouterContext) {
     const login: string             = this.request.body.formData.login;
     const password: string          = this.request.body.formData.password;
     const passwordRepeat: string    = this.request.body.formData.passwordRepeat;
@@ -102,7 +103,7 @@ router.post('/register', function *(next) {
     }
 });
 
-router.get('/logout', middleware.connected, function *(next) {
+router.get('/logout', middleware.connected, function *(next: koaRouter.IRouterContext) {
     this.session = null;
     this.redirect("/main/authentification");
 });

@@ -11,20 +11,15 @@ import * as database from "rethinkdb";
 import * as path from "path";
 import * as loader from "./core/autoloader";
 import * as http from "http";
+import * as koa from "koa";
+import * as koaJson from "koa-json";
+import * as koaBodyparser from "koa-bodyparser";
+import * as koaRouter from "koa-router";
+import * as socketIO from "socket.io";
 
-const koa               = require('koa');
-const helmet            = require('koa-helmet');
 const sessions          = require('koa-generic-session');
 const koaPug            = require('koa-pug');
-const bodyParser        = require('koa-bodyparser');
-const koaJson           = require('koa-json');
-const koaRouter         = require('koa-router');
-const socketIO          = require('socket.io');
 const RedisStore        = require('koa-redis');
-const redis             = require('socket.io-redis');
-const cookie            = require('cookie');
-const koaSocketSession  = require('koa-socket-session');
-const koaSocket         = require('koa-socket.io');
 
 const configuration: iConfiguration = require('../configuration.json');
 const socketEvents = require('../data/socket-events.json');
@@ -53,9 +48,12 @@ if (cluster.isMaster) {
 else {
 
     database.connect(configuration.database, (err: Error, conn: database.Connection) => {
-        if(err) throw new Error(err.toString());
+        if(err) {
+            console.log(err.message.split('\n')[0]);
+            process.exit(1);
+        }
 
-        const app = koa();
+        const app = new koa();
 
         new koaPug({
             viewPath: path.join(__dirname,'../views'),
@@ -74,18 +72,14 @@ else {
             resave: true
         });
 
-        app.use(session);
-        app.use( bodyParser() );
-        //app.use( helmet() );
+        app.use( session );
+        app.use( koaBodyparser() );
         app.use( koaJson() );
 
-        //io.use(koaSocketSession(app, session));
+        const server: http.Server = http.createServer(app.callback());
 
-        const server = http.createServer(app.callback());
-
-        const io = socketIO(server);
-
-        io.on('connection', (socket) => {
+        const io: SocketIO.Server = socketIO(server);
+        io.on('connection', (socket: SocketIO.Socket) => {
             console.log('user connected to the socket.io server!');
 
             socket.on(socketEvents.getServers, async () => {
@@ -131,7 +125,7 @@ else {
             // TODO: Password event!
         });
 
-        app.use( function *(next) {
+        app.use( function *(next: koa.Context) {
             this.db = database;
             this.conn = conn;
             this.session.username = "fraxken";
@@ -145,7 +139,7 @@ else {
         loader.getModules("routing").then( (modulesArr: string[]) => {
 
             modulesArr.forEach( (route: string) => {
-                const Router = require(route);
+                const Router : koaRouter = require(route);
                 app.use( Router.routes() ).use( Router.allowedMethods() );
             });
 

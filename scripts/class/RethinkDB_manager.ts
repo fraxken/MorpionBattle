@@ -7,7 +7,7 @@ import * as async from "async";
 export class RethinkDB_Manager {
 
     private conn: database.Connection;
-    private db: database.Db;
+    private db: database.RDb;
 
     constructor(dbName: string,conn: database.Connection) {
         this.conn = conn;
