@@ -16,8 +16,10 @@ Lancer une base Redis (ne rien toucher)
 
 ```
 npm install
-npm run build
+typings install
+tsc
 npm run database
+npm start
 ```
 
 # Roadmap V1
@@ -29,7 +31,7 @@ npm run database
 - [x] Améliorer nginput (optionnal input)
 - [x] Ajouter au middleware les tables directement (plus propre).
 - [ ] Refaire l'objet serversList avec un Objet contenant les IDs.
-- [ ] Mettre à jour le typage du projet.
+- [x] Mettre à jour le typage du projet.
 - [ ] Développer le bouton "Join" (=> En cours)
 
 ### 0.3.0
