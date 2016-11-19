@@ -2,7 +2,7 @@
     var Socket = angular.module("ngSocket", []);
 
     Socket.factory('socket', function ($rootScope) {
-        var socket = io.connect("127.0.0.1:4500");
+        var socket = io.connect("127.0.0.1:3500");
         return {
             on: function (eventName, callback) {
                 socket.on(eventName, function () {

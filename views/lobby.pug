@@ -21,5 +21,5 @@ section(id="lobby",ng-controller="lobby")
                 p(class="name") {{v.name}}
                 span {{v.playerCount}}/3
         section(class="options")
-            button(ng-click="popupState(true)") Create Game
+            button(ng-click="Layout.popup.changeState(true)") Create Game
             button(ng-class="{ 'inactive' : serverSelected === false }",ng-click="joinGame()") Join

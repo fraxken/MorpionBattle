@@ -1,5 +1,5 @@
 h1 Create game
-form(name="creategame",ng-controller="Form_creategame",ng-submit="submit()",novalidate,style="align-items: center")
+form(name="creategame",ng-controller="createGameController",ng-submit="submit()",novalidate,style="align-items: center")
     nginput(
         ng-model="formData.gameName",
         name="gameName",
@@ -20,4 +20,4 @@ form(name="creategame",ng-controller="Form_creategame",ng-submit="submit()",nova
     )
     section.field-center
         input(type="submit",ng-class="{'disabled' : creategame.gameName.$invalid}",ng-disabled="creategame.gameName.$invalid",value="Create")
-        button.red(ng-click="popupState(false)") Cancel
+        button.red(ng-click="Layout.popup.changeState(false);cleanUp()",type="button") Cancel

@@ -3,8 +3,10 @@
         'angular-loading-bar',
         'ngAnimate',
         'ngSocket',
+        'ngPopup',
         'ngForm',
         'Router',
+        'popupsControllers',
         'authentification'
     ]);
 
@@ -39,23 +41,9 @@
         };
     }]);
 
-    APP.controller("layoutController",function($scope,$timeout,$location) {
+    APP.controller("ControllerLayout",function($scope,$timeout,$location,popup) {
         console.log("layoutController loaded!");
-
-        $scope.popupOpen = false;
-        $scope.popupTemplate = "popups/creategame";
-        this.changePopup = function(name) {
-            $scope.popupTemplate = "popups/"+name;
-            $scope.popupOpen = true;
-        }
-        $scope.popupState = function(value) {
-            if(value != undefined && typeof value != "boolean") return;
-            $scope.popupOpen = value ? value : ($scope.popupOpen ? false : true);
-        }
-        $scope.getPopup = function() {
-            return $scope.popupTemplate;
-        }
-
+        this.popup = popup;
     });
 
     APP.controller("lobby",function($scope,$location) {
@@ -97,23 +85,6 @@
                 console.log($scope.gameid);
                 socket.emit('joinGame',{id: $scope.gameid});
             }
-        }
-    });
-
-    APP.controller("Form_creategame",function($scope,$location,$http) {
-        $scope.formData = {};
-        $scope.submit = function() {
-            $http.post('/creategame', {
-                formData: $scope.formData
-            }).success(function (data, status, headers, config) {
-                console.log(data);
-                if (data.errCode == 1) {
-                    $location.path("game");
-                }
-                else {
-                    //$scope.showFlash(data.errorMessage);
-                }
-            });
         }
     });
 
