@@ -32,6 +32,7 @@ npm start
 - [x] Ajouter au middleware les tables directement (plus propre).
 - [x] Amélioration du script database ! (Création / Suppression / Hydratation).
 - [x] Mettre à jour le typage du projet.
+- [x] Refonte du code des popups en front!
 - [ ] Refaire l'objet serversList avec un Objet contenant les IDs.
 - [ ] Développer le bouton "Join" (=> En cours)
 

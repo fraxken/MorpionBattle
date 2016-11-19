@@ -10,8 +10,6 @@
         'authentification'
     ]);
 
-    APP.value('popupOpen',false);
-
     APP.directive('head', ['$rootScope','$compile',function($rootScope, $compile){
         return {
             restrict: 'E',
