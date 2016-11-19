@@ -14,6 +14,12 @@ class RethinkDB_Manager {
         this.conn = conn;
         this.db = database.db(dbName);
     }
+    static createDatabase(conn, baseName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield database.dbCreate(baseName).run(conn);
+            return res.dbs_created ? true : false;
+        });
+    }
     tableDeleteBulk(tablesNames) {
         return __awaiter(this, void 0, void 0, function* () {
             const tablesList = yield this.db.tableList().run(this.conn);

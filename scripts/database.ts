@@ -35,6 +35,9 @@ database.connect(configuration.database, async (err: Error, conn: database.Conne
     // Configure default table!
     const dbTables: string[] = ['users','game'];
 
+    const rc: boolean = await RethinkDB_Manager.createDatabase(conn,configuration.database.db);
+    console.log(`Database creation return rc => ${rc}`);
+    await sleep(1000);
     const dbManager: RethinkDB_Manager = new RethinkDB_Manager(configuration.database.db,conn);
 
     console.log(chalk.green('Executing actions...'));
@@ -44,6 +47,7 @@ database.connect(configuration.database, async (err: Error, conn: database.Conne
     await sleep(3000);
     await dbManager.tableHydrate<user>('users',usersArray);
     console.log(chalk.green('Executing actions done!'));
+
 
     closeHandler();
     process.exit(0);

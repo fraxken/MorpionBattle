@@ -14,6 +14,11 @@ export class RethinkDB_Manager {
         this.db = database.db(dbName);
     }
 
+    public static async createDatabase(conn,baseName: string) : Promise<boolean> {
+        const res: database.DbCreateResult = await database.dbCreate(baseName).run(conn);
+        return res.dbs_created ? true : false;
+    }
+
     public async tableDeleteBulk(tablesNames: string[]) : Promise<void> {
         const tablesList: string[] = await this.db.tableList().run(this.conn);
         await new Promise( (resolve,reject) => {
