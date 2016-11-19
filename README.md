@@ -30,8 +30,9 @@ npm start
 - [x] Connexion socket.io
 - [x] Améliorer nginput (optionnal input)
 - [x] Ajouter au middleware les tables directement (plus propre).
-- [ ] Refaire l'objet serversList avec un Objet contenant les IDs.
+- [x] Amélioration du script database ! (Création / Suppression / Hydratation).
 - [x] Mettre à jour le typage du projet.
+- [ ] Refaire l'objet serversList avec un Objet contenant les IDs.
 - [ ] Développer le bouton "Join" (=> En cours)
 
 ### 0.3.0
@@ -44,8 +45,8 @@ npm start
 > Toute contribution doit être proposé par le biais d'une branche !
 
 - [ ] Meilleur inscription/connexion (Faire des vérifications plus abouti, empêcher les multiples connexions).
+- [ ] Inscription et connexion avec passport.js (google,facebook,twitter,steam)
 - [ ] Un script pour crée un utilisateur (sympa pour les tests!).
-- [ ] Amélioration du script database ! (Création / Suppression / Hydratation).
 - [ ] Création de test unitaire.
 
 # V2
