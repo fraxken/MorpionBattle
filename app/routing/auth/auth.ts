@@ -107,3 +107,5 @@ router.get('/logout', middleware.connected, function *(next: koaRouter.IRouterCo
     this.session = null;
     this.redirect("/main/authentification");
 });
+
+export = router;

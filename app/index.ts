@@ -27,7 +27,7 @@ const socketEvents = require('../data/socket-events.json');
 const numCPUs : number = 1;
 
 // Debugging & Trace
-process.on('unhandledRejection', console.log.bind(console));
+//process.on('unhandledRejection', console.log.bind(console));
 /*
     Fork the process on multi-core.
 */
@@ -139,7 +139,7 @@ else {
         loader.getModules("routing").then( (modulesArr: string[]) => {
 
             modulesArr.forEach( (route: string) => {
-                const Router : koaRouter = require(route);
+                const Router = require(route);
                 app.use( Router.routes() ).use( Router.allowedMethods() );
             });
 

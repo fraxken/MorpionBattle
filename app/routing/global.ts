@@ -87,3 +87,5 @@ router.get('/main/authentification', middleware.notConnected, function *(next: k
 router.get('/', function *(next: koaRouter.IRouterContext) {
     this.render("layout");
 });
+
+export = router;
