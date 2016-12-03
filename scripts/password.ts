@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import {Password} from "../app/core/utils";
 
 let lastPassword : string  = '';

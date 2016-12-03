@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 import * as path from "path";
 import * as koaRouter from "koa-router";
 import * as middleware from "../core/middleware";

@@ -1,4 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
 /// <reference path="../../interfaces.d.ts" />
 
 import * as database from "rethinkdb";
@@ -7,7 +6,7 @@ import * as async from "async";
 export class RethinkDB_Manager {
 
     private conn: database.Connection;
-    private db: database.RDb;
+    private db: database.Db;
 
     constructor(dbName: string,conn: database.Connection) {
         this.conn = conn;
@@ -15,8 +14,8 @@ export class RethinkDB_Manager {
     }
 
     public static async createDatabase(conn,baseName: string) : Promise<boolean> {
-        const res: database.DbCreateResult = await database.dbCreate(baseName).run(conn);
-        return res.dbs_created ? true : false;
+        const res: database.CreateResult = await database.dbCreate(baseName).run(conn);
+        return res.created > 0 ? true : false;
     }
 
     public async tableDeleteBulk(tablesNames: string[]) : Promise<void> {

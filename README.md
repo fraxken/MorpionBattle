@@ -16,9 +16,8 @@ Lancer une base Redis (ne rien toucher)
 
 ```
 npm install
-typings install
 tsc
-npm run database
+npm run database 
 npm start
 ```
 

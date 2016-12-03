@@ -1,4 +1,3 @@
 /node_modules
-/typings
 /app/**/**/**/*.js
 /scripts/**/*.js

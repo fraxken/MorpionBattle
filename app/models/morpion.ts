@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 import * as chalk from "chalk";
 import * as events from "events";
 
